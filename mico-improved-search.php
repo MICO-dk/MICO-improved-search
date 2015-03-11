@@ -44,7 +44,11 @@ function limit_post_type($query) {
 	    $mas_post_type = get_option('mico-improved-search' . '_post_type_support');
 	    $default_post_types = array('post', 'page');
 
-	    $all_post_types = array_merge($mas_post_type, $default_post_types);
+	    if(is_array($mas_post_type) ) :
+            $all_post_types = array_merge($mas_post_type, $default_post_types);
+        else : 
+            $all_post_types = $default_post_types;
+        endif;
 
 	    if ($query->is_search) {
 	        //var_dump($query->get('post_type'));
