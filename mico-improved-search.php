@@ -89,7 +89,7 @@ function frontend_search_join($join) {
 
 	$areas = get_option('mico-improved-search' . '_areas_to_search');
 
-   	if(isset($_GET['s']) && is_array($areas) && in_array('frontend', $areas) && is_search() ){
+   	if(isset($_GET['s']) && is_array($areas) && in_array('frontend', $areas) && is_search() && !is_admin() ){
 	    $join .="LEFT JOIN $wpdb->postmeta AS mm ON ($wpdb->posts.ID = mm.post_id)";
 	}
     return $join;
@@ -124,7 +124,7 @@ function frontend_search_where( $where ){
 
     $areas = get_option('mico-improved-search' . '_areas_to_search');
 
-   	if(isset($_GET['s']) && is_array($areas) && in_array('frontend', $areas) && is_search() ){
+   	if(isset($_GET['s']) && is_array($areas) && in_array('frontend', $areas) && is_search() && !is_admin() ){
     	$where = preg_replace(
        "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
        "(".$wpdb->posts.".post_title LIKE $1) OR (mm.meta_value LIKE $1)", $where );
@@ -160,7 +160,7 @@ function frontend_search_destinct($where) {
 
     $areas = get_option('mico-improved-search' . '_areas_to_search');
 
-   	if(isset($_GET['s']) && is_array($areas) && in_array('frontend', $areas) && is_search() ){
+   	if(isset($_GET['s']) && is_array($areas) && in_array('frontend', $areas) && is_search() && !is_admin() ){
 	    return "DISTINCT";
 	}
     return $where;
